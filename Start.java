@@ -100,28 +100,42 @@ public class Start {
 	}
 
 	public static void make(char c) {
+		int[] p = findeRover();
 		if (c == 'f') {
-			int[] p = findeRover();
 			if (get(mars, p).equals("n"))
 				p[1]--;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]++;											
 			else if (get(mars, p).equals("s"))
 				p[1]++;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]--;											
 			else if (get(mars, p).equals("e"))
 				p[0]++;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]--;											
 			else if (get(mars, p).equals("w"))
 				p[0]--;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]++;											
 		} else if (c == 'b') {
-			int[] p = findeRover();
 			if (get(mars, p).equals("s"))
 				p[1]--;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]++;			
 			else if (get(mars, p).equals("n"))
 				p[1]++;
-			else if (get(mars, p).equals("w"))
-				p[0]++;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]--;			
+				else if (get(mars, p).equals("w"))
+					p[0]++;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]--;			
 			else if (get(mars, p).equals("e"))
 				p[0]--;
+				if (get(mars, new int[] { p[0], p[1] }).equals("#"))
+					p[0]++;		
 		} else if (c == 'l') {
-			int[] p = findeRover();
 			if (get(mars, p).equals("n"))
 				mars.put(p, "w");
 			else if (get(mars, p).equals("s"))
@@ -131,7 +145,6 @@ public class Start {
 			else if (get(mars, p).equals("w"))
 				mars.put(p, "s");
 		} else if (c == 'r') {
-			int[] p = findeRover();
 			if (get(mars, p).equals("w"))
 				mars.put(p, "n");
 			else if (get(mars, p).equals("e"))
