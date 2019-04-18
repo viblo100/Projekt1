@@ -25,7 +25,7 @@ public class Start {
 			out();
 		}
 	}
-	
+	/*Mars Landschaft initialisieren*/
 	public static void init() {
 		mars = new LinkedHashMap<>();
 		int x = 80;
@@ -52,7 +52,8 @@ public class Start {
 		}
 		return x;
 	}
-
+	
+	/*Gibt den char an der übergebenen Stelle zurück*/
 	public static String get(Map<int[], String> kloetze, int[] p) {
 		Set<Entry<int[], String>> entrySet = kloetze.entrySet();
 		for (Entry<int[], String> entry : entrySet) {
@@ -62,6 +63,7 @@ public class Start {
 		return null;
 	}
 
+	/*Gibt die Marskarte aus*/
 	public static void out() {
 		int[] max = maximum(mars.keySet());
 		for (int j = 0; j < max[1]; j++) {
@@ -90,6 +92,7 @@ public class Start {
 		System.out.println();
 	}
 
+	/*Abfrage wie der Rover sich bewegen muss, nach den übergebenen Argumenten*/
 	public static void make(char c) {
 		int[] p = findeRover();
 		if (c == 'f') {
@@ -148,6 +151,7 @@ public class Start {
 
 	}
 
+	/*Sucht den Rover und gibt die aktuelle Position zurück*/
 	private static int[] findeRover() {
 		Set<Entry<int[], String>> entrySet = mars.entrySet();
 		for (Entry<int[], String> entry : entrySet) {
