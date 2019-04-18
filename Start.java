@@ -11,6 +11,21 @@ public class Start {
 	static Random r = new Random();
 	static LinkedHashMap<int[], String> mars;
 
+	public static void main(String[] args) {
+
+		if (args.length > 1) {
+			long seed = Long.parseLong(args[1]);
+			r.setSeed(seed);
+		}
+		init();
+		String pg = args[0];
+		out();
+		for (int i = 0; i < pg.length(); i++) {
+			make(pg.charAt(i));
+			out();
+		}
+	}
+	
 	public static void init() {
 		mars = new LinkedHashMap<>();
 		int x = 80;
@@ -48,17 +63,9 @@ public class Start {
 	}
 
 	public static void out() {
-		// Set<int[]> keySet = mars.keySet();
-		// for (int[] e : keySet) {
-		// if (e[0] == 39 && e[1] == 10)
-		// System.err.println(mars.get(e) + " " + e.hashCode());
-		// }
-
 		int[] max = maximum(mars.keySet());
 		for (int j = 0; j < max[1]; j++) {
 			for (int i = 0; i < max[0]; i++) {
-				// System.out.println(i + "," + j + ": " + get(mars, new int[] { i, j }));
-
 				if (get(mars, new int[] { i, j }) == null) {
 					System.out.print(" ");
 					continue;
@@ -81,22 +88,6 @@ public class Start {
 			System.out.print("=");
 		}
 		System.out.println();
-	}
-
-	public static void main(String[] args) {
-
-		if (args.length > 1) {
-			long seed = Long.parseLong(args[1]);
-			r.setSeed(seed);
-			// System.out.println("Seed: " + seed);
-		}
-		init();
-		String pg = args[0];
-		out();
-		for (int i = 0; i < pg.length(); i++) {
-			make(pg.charAt(i));
-			out();
-		}
 	}
 
 	public static void make(char c) {
