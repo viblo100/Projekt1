@@ -46,10 +46,21 @@ public class Start {
 	public static void moveRover(char c) {
 		int[] p = searchRover();
 		if (c == 'f') {
-			if (getChar(mars, p).equals("n"))
-				p[1]--;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]++;	
+			goForward(p);									
+		} else if (c == 'b') {
+			goBackward(p);		
+		} else if (c == 'l') {
+			goLeft(p);
+		} else if (c == 'r') {
+			goRight(p);
+		}
+	}
+	
+	public static void goForward(int[] p) {
+		if (getChar(mars, p).equals("n"))
+			p[1]--;
+			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
+				p[0]++;	
 			else if (getChar(mars, p).equals("s"))
 				p[1]++;
 				if (getChar(mars, new int[] { p[0], p[1] }).equals("#"))
@@ -61,45 +72,50 @@ public class Start {
 			else if (getChar(mars, p).equals("w"))
 				p[0]--;
 				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]++;										
-		} else if (c == 'b') {
-			if (getChar(mars, p).equals("s"))
-				p[1]--;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
 					p[0]++;			
-			else if (getChar(mars, p).equals("n"))
-				p[1]++;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]--;			
-			else if (getChar(mars, p).equals("w"))
-				p[0]++;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]--;			
-			else if (getChar(mars, p).equals("e"))
-				p[0]--;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]++;	
-		} else if (c == 'l') {
-			if (getChar(mars, p).equals("n"))
-				mars.put(p, "w");
-			else if (getChar(mars, p).equals("s"))
-				mars.put(p, "e");
-			else if (getChar(mars, p).equals("e"))
-				mars.put(p, "n");
-			else if (getChar(mars, p).equals("w"))
-				mars.put(p, "s");
-		} else if (c == 'r') {
-			if (getChar(mars, p).equals("w"))
-				mars.put(p, "n");
-			else if (getChar(mars, p).equals("e"))
-				mars.put(p, "s");
-			else if (getChar(mars, p).equals("n"))
-				mars.put(p, "e");
-			else if (getChar(mars, p).equals("s"))
-				mars.put(p, "w");
-		}
-
 	}
+	
+	public static void goBackward(int[] p) {
+		if (getChar(mars, p).equals("s"))
+			p[1]--;
+			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
+				p[0]++;			
+		else if (getChar(mars, p).equals("n"))
+			p[1]++;
+			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
+				p[0]--;			
+		else if (getChar(mars, p).equals("w"))
+			p[0]++;
+			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
+				p[0]--;			
+		else if (getChar(mars, p).equals("e"))
+			p[0]--;
+			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
+				p[0]++;	
+	}
+	
+	public static void goLeft(int[] p) {
+		if (getChar(mars, p).equals("n"))
+			mars.put(p, "w");
+		else if (getChar(mars, p).equals("s"))
+			mars.put(p, "e");
+		else if (getChar(mars, p).equals("e"))
+			mars.put(p, "n");
+		else if (getChar(mars, p).equals("w"))
+			mars.put(p, "s");
+	}
+	
+	public static void goRight(int[] p) {
+		if (getChar(mars, p).equals("w"))
+			mars.put(p, "n");
+		else if (getChar(mars, p).equals("e"))
+			mars.put(p, "s");
+		else if (getChar(mars, p).equals("n"))
+			mars.put(p, "e");
+		else if (getChar(mars, p).equals("s"))
+			mars.put(p, "w");
+	}
+	
 
 		
 	/*Sucht den Rover und gibt die aktuelle Position zurück*/
