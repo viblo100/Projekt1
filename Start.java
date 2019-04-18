@@ -7,12 +7,11 @@ import java.util.Random;
 import java.util.Set;
 
 public class Start {
-
+	
 	static Random r = new Random();
 	static LinkedHashMap<int[], String> mars;
 
 	public static void main(String[] args) {
-
 		if (args.length > 1) {
 			long seed = Long.parseLong(args[1]);
 			r.setSeed(seed);
@@ -20,11 +19,12 @@ public class Start {
 		init();
 		String pg = args[0];
 		output();
- 		for (int i = 0; i < pg.length(); i++) {
+		for (int i = 0; i < pg.length(); i++) {
 			moveRover(pg.charAt(i));
 			output();
 		}
 	}
+	
 	/*Mars Landschaft initialisieren*/
 	public static void init() {
 		mars = new LinkedHashMap<>();
@@ -40,55 +40,6 @@ public class Start {
 			}
 		}
 		mars.put(new int[] { rx, ry }, "n");
-	}
-
-	public static int[] maximum(Set<int[]> set) {
-		int[] x = new int[2];
-		for (int[] e : set) {
-			if (e[0] > x[0])
-				x[0] = e[0];
-			if (e[1] > x[1])
-				x[1] = e[1];
-		}
-		return x;
-	}
-	
-	/*Gibt den char an der übergebenen Stelle zurück*/
-	public static String getChar(Map<int[], String> kloetze, int[] p) {
-		Set<Entry<int[], String>> entrySet = kloetze.entrySet();
-		for (Entry<int[], String> entry : entrySet) {
-			if (entry.getKey()[0] == p[0] && entry.getKey()[1] == p[1])
-				return entry.getValue();
-		}
-		return null;
-	}
-
-	/*Gibt die Marskarte aus*/
-	public static void output() {
-		int[] max = maximum(mars.keySet());
-		for (int j = 0; j < max[1]; j++) {
-			for (int i = 0; i < max[0]; i++) {
-				if (getChar(mars, new int[] { i, j }) == null) {
-					System.out.print(" ");
-					continue;
-				}
-				if (getChar(mars, new int[] { i, j }).equals("#"))
-					System.out.print("#");
-				else if (getChar(mars, new int[] { i, j }).equals("n"))
-					System.out.print("^");
-				else if (getChar(mars, new int[] { i, j }).equals("s"))
-					System.out.print("V");
-				else if (getChar(mars, new int[] { i, j }).equals("e"))
-					System.out.print(">");
-				if (getChar(mars, new int[] { i, j }).equals("w"))
-					System.out.print("<");
-			}
-			System.out.println();
-		}
-		for (int i = 0; i < max[0]; i++) {
-			System.out.print("=");
-		}
-		System.out.println();
 	}
 
 	/*Abfrage wie der Rover sich bewegen muss, nach den übergebenen Argumenten*/
@@ -150,6 +101,7 @@ public class Start {
 
 	}
 
+		
 	/*Sucht den Rover und gibt die aktuelle Position zurück*/
 	private static int[] searchRover() {
 		Set<Entry<int[], String>> entrySet = mars.entrySet();
@@ -159,5 +111,53 @@ public class Start {
 		}
 		throw new IllegalStateException("Rover missing in action");
 	}
+	
+	/*Gibt die Marskarte aus*/
+	public static void output() {
+		int[] max = maximum(mars.keySet());
+		for (int j = 0; j < max[1]; j++) {
+			for (int i = 0; i < max[0]; i++) {
+				if (getChar(mars, new int[] { i, j }) == null) {
+					System.out.print(" ");
+					continue;
+				}
+				if (getChar(mars, new int[] { i, j }).equals("#"))
+					System.out.print("#");
+				else if (getChar(mars, new int[] { i, j }).equals("n"))
+					System.out.print("^");
+				else if (getChar(mars, new int[] { i, j }).equals("s"))
+					System.out.print("V");
+				else if (getChar(mars, new int[] { i, j }).equals("e"))
+					System.out.print(">");
+				if (getChar(mars, new int[] { i, j }).equals("w"))
+					System.out.print("<");
+			}
+			System.out.println();
+		}
+		for (int i = 0; i < max[0]; i++) {
+			System.out.print("=");
+		}
+		System.out.println();
+	}
 
+	public static int[] maximum(Set<int[]> set) {
+		int[] x = new int[2];
+		for (int[] e : set) {
+			if (e[0] > x[0])
+				x[0] = e[0];
+			if (e[1] > x[1])
+				x[1] = e[1];
+		}
+		return x;
+	}
+	
+	/*Gibt den char an der übergebenen Stelle zurück*/
+	public static String getChar(Map<int[], String> kloetze, int[] p) {
+		Set<Entry<int[], String>> entrySet = kloetze.entrySet();
+		for (Entry<int[], String> entry : entrySet) {
+			if (entry.getKey()[0] == p[0] && entry.getKey()[1] == p[1])
+				return entry.getValue();
+		}
+		return null;
+	}
 }
