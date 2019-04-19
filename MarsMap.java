@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class MarsMap {
 	
-	static Random r = new Random();
-	static char[][] mars;
-	static int x = 20;
-	static int y = 80;
+	private static Random r = new Random();
+	private static char[][] mars;
+	private static int x = 20;
+	private static int y = 80;
 	
 	/*Mars Landschaft initialisieren*/
 	public static void init() {
@@ -41,5 +41,17 @@ public class MarsMap {
 		}
 		System.out.println();
 	}
+	
+	public static int getX() {
+		return x;
+	}
+	
+	public static int getY() {
+		return y;
+	}
+	
+	public static char[][] getMars(){
+		return mars;
+	}
+	
 }
-
