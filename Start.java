@@ -1,179 +1,23 @@
 package rover;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 
-public class Start {
-	
+public class Start_new {
+
 	static Random r = new Random();
-	static LinkedHashMap<int[], String> mars;
 
 	public static void main(String[] args) {
 		if (args.length > 1) {
 			long seed = Long.parseLong(args[1]);
 			r.setSeed(seed);
 		}
-		init();
+		rover.MarsMap.init();
 		String pg = args[0];
-		output();
+		rover.MarsMap.output();
 		for (int i = 0; i < pg.length(); i++) {
-			moveRover(pg.charAt(i));
-			output();
+			rover.Rover.moveRover(pg.charAt(i));
+			rover.MarsMap.output();
 		}
-	}
-	
-	/*Mars Landschaft initialisieren*/
-	public static void init() {
-		mars = new LinkedHashMap<>();
-		int x = 80;
-		int y = 20;
-		int rx = x / 2;
-		int ry = y / 2;
-		for (int i = 0; i < x; i++) {
-			for (int j = 0; j < y; j++) {
-				int[] p = new int[] { i, j };
-				if (r.nextDouble() < 0.25 && !(rx == i && ry == j))
-					mars.put(p, "#");
-			}
-		}
-		mars.put(new int[] { rx, ry }, "n");
 	}
 
-	/*Abfrage wie der Rover sich bewegen muss, nach den übergebenen Argumenten*/
-	public static void moveRover(char c) {
-		int[] p = searchRover();
-		if (c == 'f') {
-			goForward(p);									
-		} else if (c == 'b') {
-			goBackward(p);		
-		} else if (c == 'l') {
-			goLeft(p);
-		} else if (c == 'r') {
-			goRight(p);
-		}
-	}
-	
-	public static void goForward(int[] p) {
-		if (getChar(mars, p).equals("n"))
-			p[1]--;
-			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;	
-			else if (getChar(mars, p).equals("s"))
-				p[1]++;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#"))
-					p[0]--;											
-			else if (getChar(mars, p).equals("e"))
-				p[0]++;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]--;											
-			else if (getChar(mars, p).equals("w"))
-				p[0]--;
-				if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]++;			
-	}
-	
-	public static void goBackward(int[] p) {
-		if (getChar(mars, p).equals("s"))
-			p[1]--;
-			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;			
-		else if (getChar(mars, p).equals("n"))
-			p[1]++;
-			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]--;			
-		else if (getChar(mars, p).equals("w"))
-			p[0]++;
-			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]--;			
-		else if (getChar(mars, p).equals("e"))
-			p[0]--;
-			if (getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;	
-	}
-	
-	public static void goLeft(int[] p) {
-		if (getChar(mars, p).equals("n"))
-			mars.put(p, "w");
-		else if (getChar(mars, p).equals("s"))
-			mars.put(p, "e");
-		else if (getChar(mars, p).equals("e"))
-			mars.put(p, "n");
-		else if (getChar(mars, p).equals("w"))
-			mars.put(p, "s");
-	}
-	
-	public static void goRight(int[] p) {
-		if (getChar(mars, p).equals("w"))
-			mars.put(p, "n");
-		else if (getChar(mars, p).equals("e"))
-			mars.put(p, "s");
-		else if (getChar(mars, p).equals("n"))
-			mars.put(p, "e");
-		else if (getChar(mars, p).equals("s"))
-			mars.put(p, "w");
-	}
-	
-
-		
-	/*Sucht den Rover und gibt die aktuelle Position zurück*/
-	private static int[] searchRover() {
-		Set<Entry<int[], String>> entrySet = mars.entrySet();
-		for (Entry<int[], String> entry : entrySet) {
-			if (entry.getValue() != null && !entry.getValue().equals("#"))
-				return entry.getKey();
-		}
-		throw new IllegalStateException("Rover missing in action");
-	}
-	
-	/*Gibt die Marskarte aus*/
-	public static void output() {
-		int[] max = maximum(mars.keySet());
-		for (int j = 0; j < max[1]; j++) {
-			for (int i = 0; i < max[0]; i++) {
-				if (getChar(mars, new int[] { i, j }) == null) {
-					System.out.print(" ");
-					continue;
-				}
-				if (getChar(mars, new int[] { i, j }).equals("#"))
-					System.out.print("#");
-				else if (getChar(mars, new int[] { i, j }).equals("n"))
-					System.out.print("^");
-				else if (getChar(mars, new int[] { i, j }).equals("s"))
-					System.out.print("V");
-				else if (getChar(mars, new int[] { i, j }).equals("e"))
-					System.out.print(">");
-				if (getChar(mars, new int[] { i, j }).equals("w"))
-					System.out.print("<");
-			}
-			System.out.println();
-		}
-		for (int i = 0; i < max[0]; i++) {
-			System.out.print("=");
-		}
-		System.out.println();
-	}
-
-	public static int[] maximum(Set<int[]> set) {
-		int[] x = new int[2];
-		for (int[] e : set) {
-			if (e[0] > x[0])
-				x[0] = e[0];
-			if (e[1] > x[1])
-				x[1] = e[1];
-		}
-		return x;
-	}
-	
-	/*Gibt den char an der übergebenen Stelle zurück*/
-	public static String getChar(Map<int[], String> kloetze, int[] p) {
-		Set<Entry<int[], String>> entrySet = kloetze.entrySet();
-		for (Entry<int[], String> entry : entrySet) {
-			if (entry.getKey()[0] == p[0] && entry.getKey()[1] == p[1])
-				return entry.getValue();
-		}
-		return null;
-	}
 }
