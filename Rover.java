@@ -2,7 +2,7 @@ package rover;
 
 public class Rover {
 	
-	static char[][] mars = rover.MarsMap.mars;
+	static char[][] mars = rover.MarsMap.getMars();
 	
 	/*Abfrage wie der Rover sich bewegen muss, nach den übergebenen Argumenten*/
 	public static void moveRover(char command) {
@@ -19,7 +19,7 @@ public class Rover {
 	}
 	
 	public static void goForward(int[] pos) {
-		if(pos[0] > 0 && pos[1] > 0 && pos[0] < rover.MarsMap.x -1 && pos[1] < rover.MarsMap.y -1 ) {	//Abfrage ob der Rover am Rand der Karte steht.
+		if(pos[0] > 0 && pos[1] > 0 && pos[0] < rover.MarsMap.getX() -1 && pos[1] < rover.MarsMap.getY() -1 ) {	//Abfrage ob der Rover am Rand der Karte steht.
 			if (mars[pos[0]][pos[1]] == '^' && !(mars[pos[0]-1][pos[1]] == '#')) {
 				mars[pos[0]-1][pos[1]] = '^';
 				mars[pos[0]][pos[1]] = ' ';
@@ -43,7 +43,7 @@ public class Rover {
 	}
 	
 	public static void goBackward(int[] pos) {
-		if(pos[0] > 0 && pos[1] > 0 && pos[0] < rover.MarsMap.x -1 && pos[1] < rover.MarsMap.y -1 ) {	//Abfrage ob der Rover am Rand der Karte steht.
+		if(pos[0] > 0 && pos[1] > 0 && pos[0] < rover.MarsMap.getX() -1 && pos[1] < rover.MarsMap.getY() -1 ) {	//Abfrage ob der Rover am Rand der Karte steht.
 			if (mars[pos[0]][pos[1]] == '^' && !(mars[pos[0]+1][pos[1]] == '#')) {
 				mars[pos[0]+1][pos[1]] = '^';
 				mars[pos[0]][pos[1]] = ' ';
@@ -90,8 +90,8 @@ public class Rover {
 	
 	/*Sucht den Rover und gibt die aktuelle Position zurück*/
 	private static int[] searchRover() {
-		int x = rover.MarsMap.x;
-		int y = rover.MarsMap.y;
+		int x = rover.MarsMap.getX();
+		int y = rover.MarsMap.getY();
 		int[] pos = {-1,-1};
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
@@ -109,3 +109,4 @@ public class Rover {
 	}
 	
 }
+
