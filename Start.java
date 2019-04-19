@@ -12,10 +12,10 @@ public class Start_new {
 			r.setSeed(seed);
 		}
 		rover.MarsMap.init();
-		String pg = args[0];
+		String commands = args[0];
 		rover.MarsMap.output();
-		for (int i = 0; i < pg.length(); i++) {
-			rover.Rover.moveRover(pg.charAt(i));
+		for (int i = 0; i < commands.length(); i++) {
+			rover.Rover.moveRover(commands.charAt(i));
 			rover.MarsMap.output();
 		}
 	}
