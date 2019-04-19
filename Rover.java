@@ -1,14 +1,10 @@
 package rover;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
-import java.util.Map.Entry;
-
 public class Rover {
 	
-	static LinkedHashMap<int[], String> mars = rover.MarsMap.mars;
+	static char[][] mars = rover.MarsMap.mars;
 	
-	/*Abfrage wie der Rover sich bewegen muss, nach den übergebenen Argumenten*/
+	/*Abfrage wie der Rover sich bewegen muss, nach den Ã¼bergebenen Argumenten*/
 	public static void moveRover(char c) {
 		int[] p = searchRover();
 		if (c == 'f') {
@@ -23,73 +19,87 @@ public class Rover {
 	}
 	
 	public static void goForward(int[] p) {
-		if (rover.MarsMap.getChar(mars, p).equals("n"))
-			p[1]--;
-			if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;	
-			else if (rover.MarsMap.getChar(mars, p).equals("s"))
-				p[1]++;
-				if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#"))
-					p[0]--;											
-			else if (rover.MarsMap.getChar(mars, p).equals("e"))
-				p[0]++;
-				if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]--;											
-			else if (rover.MarsMap.getChar(mars, p).equals("w"))
-				p[0]--;
-				if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-					p[0]++;			
+		if(p[0] > 0 && p[1] > 0 && p[0] < rover.MarsMap.x -1 && p[1] < rover.MarsMap.y -1 ) {
+			if (mars[p[0]][p[1]] == '^' && !(mars[p[0]-1][p[1]] == '#')) {
+				mars[p[0]-1][p[1]] = '^';
+				mars[p[0]][p[1]] = ' ';
+			}
+			else if (mars[p[0]][p[1]] == 'V' && !(mars[p[0]+1][p[1]] == '#')) {
+				mars[p[0]+1][p[1]] = 'V';
+				mars[p[0]][p[1]] = ' ';	
+			}
+			else if (mars[p[0]][p[1]] == '<' && !(mars[p[0]][p[1]-1] == '#')) {
+				mars[p[0]][p[1]-1] = '<';
+				mars[p[0]][p[1]] = ' ';
+			}
+			else if (mars[p[0]][p[1]] == '>' && !(mars[p[0]][p[1]+1] == '#')) {
+					mars[p[0]][p[1]+1] = '>';
+					mars[p[0]][p[1]] = ' ';
+			}
+		}
 	}
 	
 	public static void goBackward(int[] p) {
-		if (rover.MarsMap.getChar(mars, p).equals("s"))
-			p[1]--;
-			if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;			
-		else if (rover.MarsMap.getChar(mars, p).equals("n"))
-			p[1]++;
-			if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]--;			
-		else if (rover.MarsMap.getChar(mars, p).equals("w"))
-			p[0]++;
-			if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]--;			
-		else if (rover.MarsMap.getChar(mars, p).equals("e"))
-			p[0]--;
-			if (rover.MarsMap.getChar(mars, new int[] { p[0], p[1] }).equals("#")) 
-				p[0]++;	
+		if(p[0] > 0 && p[1] > 0 && p[0] < rover.MarsMap.x -1 && p[1] < rover.MarsMap.y -1 ) {
+			if (mars[p[0]][p[1]] == '^' && !(mars[p[0]+1][p[1]] == '#')) {
+				mars[p[0]+1][p[1]] = '^';
+				mars[p[0]][p[1]] = ' ';
+			}
+			else if (mars[p[0]][p[1]] == 'V' && !(mars[p[0]-1][p[1]] == '#')) {
+				mars[p[0]-1][p[1]] = 'V';
+				mars[p[0]][p[1]] = ' ';	
+			}
+			else if (mars[p[0]][p[1]] == '<' && !(mars[p[0]][p[1]+1] == '#')) {
+				mars[p[0]][p[1]+1] = '<';
+				mars[p[0]][p[1]] = ' ';
+			}
+			else if (mars[p[0]][p[1]] == '>' && !(mars[p[0]][p[1]-1] == '#')) {
+					mars[p[0]][p[1]-1] = '>';
+					mars[p[0]][p[1]] = ' ';
+			}
+		}
 	}
 	
 	public static void goLeft(int[] p) {
-		if (rover.MarsMap.getChar(mars, p).equals("n"))
-			mars.put(p, "w");
-		else if (rover.MarsMap.getChar(mars, p).equals("s"))
-			mars.put(p, "e");
-		else if (rover.MarsMap.getChar(mars, p).equals("e"))
-			mars.put(p, "n");
-		else if (rover.MarsMap.getChar(mars, p).equals("w"))
-			mars.put(p, "s");
+		if (mars[p[0]][p[1]] == '^')
+			mars[p[0]][p[1]] = '<';
+		else if (mars[p[0]][p[1]] == '<')
+			mars[p[0]][p[1]] = 'V';
+		else if (mars[p[0]][p[1]] == 'V')
+			mars[p[0]][p[1]] = '>';
+		else if (mars[p[0]][p[1]] == '>')
+			mars[p[0]][p[1]] = '^';
 	}
 	
 	public static void goRight(int[] p) {
-		if (rover.MarsMap.getChar(mars, p).equals("w"))
-			mars.put(p, "n");
-		else if (rover.MarsMap.getChar(mars, p).equals("e"))
-			mars.put(p, "s");
-		else if (rover.MarsMap.getChar(mars, p).equals("n"))
-			mars.put(p, "e");
-		else if (rover.MarsMap.getChar(mars, p).equals("s"))
-			mars.put(p, "w");
+		if (mars[p[0]][p[1]] == '^')
+			mars[p[0]][p[1]] = '>';
+		else if (mars[p[0]][p[1]] == '<')
+			mars[p[0]][p[1]] = '^';
+		else if (mars[p[0]][p[1]] == 'V')
+			mars[p[0]][p[1]] = '<';
+		else if (mars[p[0]][p[1]] == '>')
+			mars[p[0]][p[1]] = 'V';
 	}
 	
-	/*Sucht den Rover und gibt die aktuelle Position zurück*/
+	/*Sucht den Rover und gibt die aktuelle Position zurÃ¼ck*/
 	private static int[] searchRover() {
-		Set<Entry<int[], String>> entrySet = mars.entrySet();
-		for (Entry<int[], String> entry : entrySet) {
-			if (entry.getValue() != null && !entry.getValue().equals("#"))
-				return entry.getKey();
+		int x = rover.MarsMap.x;
+		int y = rover.MarsMap.y;
+		int[] pos = {-1,-1};
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				if(mars[i][j] != '#' && mars[i][j] != ' ') {
+					pos[0] = i;
+					pos[1] = j;
+				}
+			}
 		}
-		throw new IllegalStateException("Rover missing in action");
+		if(pos[0] > -1) {
+			return pos;
+		} else {
+			throw new IllegalStateException("Rover missing in action");
+		}
 	}
 	
 }
